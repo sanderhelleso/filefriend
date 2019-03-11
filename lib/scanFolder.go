@@ -5,6 +5,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"strconv"
 	"strings"
 )
 
@@ -15,12 +16,13 @@ var (
 // File represent a file in a folder
 // containing usefull stats and info
 type File struct {
-	name      string
-	extension string
-	folder    string
-	path      string
-	size      int
-	fileNr    int
+	name        string
+	extension   string
+	folder      string
+	path        string
+	size        string
+	lastChanged string
+	fileNr      int
 }
 
 // ScanFolder scans the given directory and
@@ -50,7 +52,7 @@ func ScanFolder() []*File {
 			extension: filepath.Ext(file),
 			folder:    filepath.Dir(file),
 			path:      FullAbsPath(file),
-			size:      123,
+			size:      GetFileSize(file),
 			fileNr:    i + 1,
 		})
 	}
@@ -69,7 +71,7 @@ func FilenameWithoutExt(file string) string {
 }
 
 // FullAbsPath returns the full absolute path
-// from the passed in file
+// from the passed in file, if error return 'N/A'
 func FullAbsPath(file string) string {
 
 	// get abs path from working dir
@@ -83,4 +85,20 @@ func FullAbsPath(file string) string {
 	// return the joined absolute path
 	// and dirname of passed in file
 	return filepath.Join(absPath, filepath.Dir(file))
+}
+
+// GetFileSize returns the size of the
+// passed in file, if error return 'N/A
+func GetFileSize(file string) string {
+
+	// get stats from passed in file
+	stats, err := os.Stat(file)
+
+	// handle potensial errors
+	if err != nil {
+		return "N/A"
+	}
+
+	// return the file size from stats
+	return strconv.Itoa(int(stats.Size()))
 }
