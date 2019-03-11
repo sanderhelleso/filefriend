@@ -1,10 +1,10 @@
 package main
 
 import (
-	"fmt"
+	"./lib"
 )
 
 func main() {
 
-	fmt.Println("Hello World")
+	lib.ScanFolder()
 }
