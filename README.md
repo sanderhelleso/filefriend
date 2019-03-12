@@ -2,6 +2,7 @@
 [![Documentation](https://godoc.org/github.com/sanderhelleso/filefriend?status.svg)](http://godoc.org/github.com/sanderhelleso/filefriend)
 [![Go Report Card](https://goreportcard.com/badge/github.com/sanderhelleso/filefriend)](https://goreportcard.com/report/github.com/sanderhelleso/filefriend)
 <br>
+<img src="https://github.com/sanderhelleso/filefriend/blob/master/project.png" />
 <br>
 📂 filefriend is a convenient wrapper around the os/filepath module for Go. Provides a wide variety of functions that combines 
 packages into one, single wrapper, allowing for flexible and easy modifications of the systems file and folders.
