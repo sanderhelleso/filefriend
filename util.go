@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-// File represent a file in a folder. Containing usefull stats and information about the file
+// File represent a file in a folder. Containing useful stats and information about the file
 //
 // name: 		The name of the file without extension or path
 // extension:	The extension of the file
@@ -31,7 +31,7 @@ func FilenameWithoutExt(file string) string {
 	return strings.TrimSuffix(filepath.Base(file), path.Ext(file))
 }
 
-// FullAbsPath returns the full absolute path from the passed in file or potensial error that occured
+// FullAbsPath returns the full absolute path from the passed in file or potensial error that occurred
 func FullAbsPath(file string) (string, error) {
 
 	absPath, err := os.Getwd()
@@ -58,7 +58,7 @@ func GetSize(file string) (string, error) {
 }
 
 // GetChangedTime returns the timestamp of the passed,
-// in file's last modified time or potensial error that occured
+// in file's last modified time or potensial error that occurred
 func GetChangedTime(file string) (string, error) {
 
 	stats, err := os.Stat(file)
@@ -71,7 +71,7 @@ func GetChangedTime(file string) (string, error) {
 }
 
 // IsFolder returns a boolean (true) if the given path is a folder.
-// If the path is a file a return boolean (false) and the error that occured.
+// If the path is a file a return boolean (false) and the error that occurred.
 func IsFolder(path string) (bool, error) {
 
 	fileInfo, err := os.Stat(path)
@@ -103,7 +103,7 @@ func SanitizePath(path string) string {
 
 // Move renames and moves the files from one directory,
 // to another depending on folder structure input.
-// Returns error or nil depending on successfull move or rename.
+// Returns error or nil depending on successful move or rename.
 func Move(from string, to string) error {
 	err := os.Rename(from, to)
 	return err
@@ -113,7 +113,7 @@ func Move(from string, to string) error {
 // with passed in content, that will be written to each single file.
 //
 // If file in folder exists, Create will skip to avoid remake of the file.
-// Returns error or nil depending on successfull write or fail.
+// Returns error or nil depending on successful write or fail.
 func Create(name string, ext string, folder string, content string, amount int) error {
 
 	// check if folder exists, create if not exists
@@ -162,8 +162,7 @@ func PathExists(path string) bool {
 }
 
 // CreateFolder creates a new folder.
-// If the folder does not exist create it,
-// if not return the error that occured.
+// If the folder does not exist create it, if not return the error that occurred.
 func CreateFolder(path string) error {
 
 	// check if folder exists, create if not
@@ -181,12 +180,17 @@ func CreateFolder(path string) error {
 // Returns a pointer to the file
 func GetFileInfo(file string) (*File, error) {
 
-	// get stats releated data from file
+	// get stats releated data from file and,
+	// handle error occurred during stats opertation
 	path, err := FullAbsPath(file)
+	if err != nil {
+		return nil, err
+	}
 	size, err := GetSize(file)
+	if err != nil {
+		return nil, err
+	}
 	lastChanged, err := GetChangedTime(file)
-
-	// handle error occured during stats opertation
 	if err != nil {
 		return nil, err
 	}

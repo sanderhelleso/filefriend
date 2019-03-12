@@ -29,17 +29,16 @@ func RenameFiles(files []*File, newName string) error {
 		err := Move(oldName, newName)
 		if err != nil {
 			return err
-		} else {
-
-			// if no errors, get new updated file info
-			updatedFileInfo, err := GetFileInfo(newName)
-			if err != nil {
-				return err
-			}
-
-			// set updated file info at old file
-			*file = *updatedFileInfo
 		}
+
+		// if no errors, get new updated file info
+		updatedFileInfo, err := GetFileInfo(newName)
+		if err != nil {
+			return err
+		}
+
+		// set updated file info at old file
+		*file = *updatedFileInfo
 	}
 
 	return nil

@@ -6,9 +6,9 @@ import (
 )
 
 // MoveFiles moves all the files in given slice to destination.
-// Uses the passed in destination paramter to select folder to move to.
+// Uses the passed in destination parameter to select folder to move to.
 //
-// Returns the updated slice containing all the files or potensial error that occured.
+// Returns the updated slice containing all the files or potensial error that occurred.
 // Cleanup will delete all trailing folders that are empty after move.
 func MoveFiles(files []*File, dest string, cleanup bool) error {
 
@@ -28,33 +28,32 @@ func MoveFiles(files []*File, dest string, cleanup bool) error {
 		// move path (from -> to)
 		moved := Move(oldPath, newPath)
 
-		// handle potensial error occuring during move
+		// handle potensial error occurring during move
 		if moved != nil {
 			return moved
-		} else {
-
-			// if 'clenup' flag is set to true
-			// check if old folder is empty
-			// if its empty, remove it
-			dirFiles, err := ioutil.ReadDir(file.folder)
-			if err != nil {
-				return err
-			}
-
-			// delete folder if empty after move
-			if len(dirFiles) == 0 {
-				os.Remove(file.folder)
-			}
-
-			// if no errors, get new updated file info
-			updatedFileInfo, err := GetFileInfo(newPath)
-			if err != nil {
-				return err
-			}
-
-			// set updated file info at old file
-			*file = *updatedFileInfo
 		}
+
+		// if 'clenup' flag is set to true
+		// check if old folder is empty
+		// if its empty, remove it
+		dirFiles, err := ioutil.ReadDir(file.folder)
+		if err != nil {
+			return err
+		}
+
+		// delete folder if empty after move
+		if len(dirFiles) == 0 {
+			os.Remove(file.folder)
+		}
+
+		// if no errors, get new updated file info
+		updatedFileInfo, err := GetFileInfo(newPath)
+		if err != nil {
+			return err
+		}
+
+		// set updated file info at old file
+		*file = *updatedFileInfo
 	}
 
 	return nil
