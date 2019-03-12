@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"./lib"
+	"./filefriend"
 )
 
 func main() {
@@ -13,7 +13,7 @@ func main() {
 	var pattern = "*"
 	fmt.Println("\n")
 
-	files, err := lib.ScanFolder(folder, pattern, true)
+	files, err := filefriend.ScanFolder(folder, pattern, true)
 	if err != nil {
 		panic(err)
 	}
