@@ -6,6 +6,21 @@ import (
 
 // ScanFolder scans the given folder passed in
 // - Pattern matches files to include/exclude
+//   pattern:
+//	{ term }
+//	term:
+//		'*'         matches any sequence of non-Separator characters
+//		'?'         matches any single non-Separator character
+//		'[' [ '^' ] { character-range } ']'
+//					character class (must be non-empty)
+//		c           matches character c (c != '*', '?', '\\', '[')
+//		'\\' c      matches character c
+//
+//	character-range:
+//		c           matches character c (c != '\\', '-', ']')
+//		'\\' c      matches character c
+//		lo '-' hi   matches character c for lo <= c <= hi
+//
 // - Recur (true/false) decides if scann follows nested folders
 //
 // returns a slice containing all the files scanned
@@ -43,7 +58,7 @@ func ScanFolder(folder string, pattern string, recur bool) ([]*File, error) {
 					return nil, err
 				}
 
-				// append files from nesten folder to
+				// append files from nested folder to
 				// main 'fileFolder' slice to be returned
 				folderFiles = append(folderFiles, filesFromFolder...)
 			}
