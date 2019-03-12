@@ -12,13 +12,13 @@ import (
 // - moved to the destination golder, if error return
 // - cleanup will delete all trailing folders that are empty after move
 // the potensial error that could occur during move
-func MoveFiles(files []*File, dest string, cleanup bool) ([]*File, error) {
+func MoveFiles(files []*File, dest string, cleanup bool) error {
 
 	// check if folder exists, create if nt
 	if !PathExists(dest) {
 		err := os.MkdirAll(dest, 0755)
 		if err != nil {
-			return nil, err
+			return err
 		}
 	}
 
@@ -33,7 +33,7 @@ func MoveFiles(files []*File, dest string, cleanup bool) ([]*File, error) {
 
 		// handle potensial error occuring during move
 		if moved != nil {
-			return nil, moved
+			return moved
 		} else {
 
 			// if 'clenup' flag is set to true
@@ -41,7 +41,7 @@ func MoveFiles(files []*File, dest string, cleanup bool) ([]*File, error) {
 			// if its empty, remove it
 			dirFiles, err := ioutil.ReadDir(file.folder)
 			if err != nil {
-				return nil, err
+				return err
 			}
 
 			// delete folder if empty after move
@@ -52,7 +52,7 @@ func MoveFiles(files []*File, dest string, cleanup bool) ([]*File, error) {
 			// if no errors, get new updated file info
 			updatedFileInfo, err := GetFileInfo(newPath)
 			if err != nil {
-				return nil, err
+				return err
 			}
 
 			// set updated file info at old file
@@ -60,5 +60,5 @@ func MoveFiles(files []*File, dest string, cleanup bool) ([]*File, error) {
 		}
 	}
 
-	return files, nil
+	return nil
 }

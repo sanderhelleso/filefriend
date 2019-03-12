@@ -1,15 +1,9 @@
 package main
 
-import (
-	"fmt"
-
-	"./filefriend"
-)
-
 func main() {
 
-	// get files in target folder maching pattern
-	var folder = "./files/test2"
+	/*// get files in target folder maching pattern
+	var folder = "./files/test/"
 	var pattern = "*"
 	fmt.Println("\n")
 
@@ -18,19 +12,8 @@ func main() {
 		panic(err)
 	}
 
-	for _, file := range files {
-		fmt.Println(file)
-	}
-
-	movedFiles, err := filefriend.MoveFiles(files, "files/test", true)
+	err = filefriend.RenameFiles(files, "ilovecake")
 	if err != nil {
 		panic(err)
-		//fmt.Println(movedFiles)
-	}
-
-	for _, file := range movedFiles {
-		fmt.Println(file)
-	}
-
-	//fmt.Println(filefriend.SanitizePath("target"))
+	}*/
 }

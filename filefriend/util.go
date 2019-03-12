@@ -99,9 +99,9 @@ func SanitizePath(path string) string {
 	return path
 }
 
-// Move moves the fies from one directory
-// to another, returns err or nil depending
-// on successfull move or not
+// Move renames and moves the files from one directory
+// to another depending on folder structure input,
+// returns err or nil depending on successfull move/rename
 func Move(from string, to string) error {
 	err := os.Rename(from, to)
 	return err
