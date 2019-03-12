@@ -1,4 +1,4 @@
-//filefriend is a convenient wrapper around the os/filepath module for Goprovides a wide variety of functions that combines
+//Package filefriend is a convenient wrapper around the os/filepath module for Go. Provides a wide variety of functions that combines
 //packages into one, single wrapper, allowing for flexible and easy modifications of the systems file and folders.
 package filefriend
 
