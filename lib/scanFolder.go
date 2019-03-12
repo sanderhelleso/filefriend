@@ -1,7 +1,6 @@
 package lib
 
 import (
-	"fmt"
 	"os"
 	"path"
 	"path/filepath"
@@ -44,32 +43,52 @@ func ScanFolder(folder string, pattern string, recur bool) ([]*File, error) {
 	for i, file := range files {
 
 		// check if file is folder
-		if ()
+		isFolder, _ := IsFolder(file)
+		if isFolder {
 
-		// get stats releated data from file
-		path, err := FullAbsPath(file)
-		size, err := GetSize(file)
-		lastChanged, err := GetChangedTime(file)
+			// if folder and recur flag is true
+			// contiune to scan nesten folder
+			if recur {
 
-		// habdle error occured during stats opretation
-		if err != nil {
-			return nil, err
+				// get files from scanned folder by recursion
+				filesFromFolder, err := ScanFolder(file+"/", pattern, recur)
+
+				// handle potensial error from nested folder scann
+				if err != nil {
+					return nil, err
+				}
+
+				// append files from nesten folder to
+				// main 'fileFolder' slice to be returned
+				folderFiles = append(folderFiles, filesFromFolder...)
+			}
+
+		} else {
+
+			// if file is not a dir, get information
+			// and add file to slice of files to be returned
+
+			// get stats releated data from file
+			path, err := FullAbsPath(file)
+			size, err := GetSize(file)
+			lastChanged, err := GetChangedTime(file)
+
+			// habdle error occured during stats opretation
+			if err != nil {
+				return nil, err
+			}
+
+			// add new File struct with file properties
+			folderFiles = append(folderFiles, &File{
+				name:        FilenameWithoutExt(file),
+				extension:   filepath.Ext(file),
+				folder:      filepath.Dir(file),
+				path:        path,
+				size:        size,
+				lastChanged: lastChanged,
+				fileNr:      i + 1,
+			})
 		}
-
-		// add new File struct with file properties
-		folderFiles = append(folderFiles, &File{
-			name:        FilenameWithoutExt(file),
-			extension:   filepath.Ext(file),
-			folder:      filepath.Dir(file),
-			path:        path,
-			size:        size,
-			lastChanged: lastChanged,
-			fileNr:      i + 1,
-		})
-	}
-
-	for _, file := range folderFiles {
-		fmt.Println(file)
 	}
 
 	return folderFiles, err
