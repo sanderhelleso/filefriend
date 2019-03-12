@@ -4,12 +4,11 @@ import (
 	"strconv"
 )
 
-// RenameFiles renames all the files in given slice to newName
-// - newName defines a string passed in as param that will replace the name
-//   if slice contains more than 1 file, an index will added to the end of name
+// RenameFiles renames all the files in given slice to newName.
+// - newName defines a string passed in as param that will replace the name,
+// if slice contains more than 1 file, an index will added to the end of name.
 //
-// - returns the updated slice containing all the files
-//   with the new name, if error return nil and error
+// - returns the updated slice containing all the files with the new name or potensial error.
 func RenameFiles(files []*File, newName string) error {
 
 	for i, file := range files {

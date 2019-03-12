@@ -4,8 +4,8 @@ import (
 	"path/filepath"
 )
 
-// ScanFolder scans the given folder passed in
-// - Pattern matches files to include/exclude
+// ScanFolder scans the given folder passed in.
+// Pattern matches files to include/exclude:
 //   pattern:
 //	{ term }
 //	term:
@@ -21,10 +21,10 @@ import (
 //		'\\' c      matches character c
 //		lo '-' hi   matches character c for lo <= c <= hi
 //
-// - Recur (true/false) decides if scann follows nested folders
+// Recur (true/false) decides if scann follows nested folders.
 //
-// returns a slice containing all the files scanned
-// matching the given pattern, if any error occured
+// Returns a slice containing all the files scanned,
+// matching the given pattern, if any error occured,
 // the returned values will be nil and occured error
 func ScanFolder(folder string, pattern string, recur bool) ([]*File, error) {
 
