@@ -34,21 +34,30 @@ func MoveFiles(files []*File, dest string, cleanup bool) ([]*File, error) {
 		// handle potensial error occuring during move
 		if moved != nil {
 			return nil, moved
-		}
+		} else {
 
-		// if 'clenup' flag is set to true
-		// check if old folder is empty
-		// if its empty, remove it
-		dirFiles, err := ioutil.ReadDir(file.folder)
-		if err != nil {
-			return nil, err
-		}
+			// if 'clenup' flag is set to true
+			// check if old folder is empty
+			// if its empty, remove it
+			dirFiles, err := ioutil.ReadDir(file.folder)
+			if err != nil {
+				return nil, err
+			}
 
-		// delete folder if empty after move
-		if len(dirFiles) == 0 {
-			os.Remove(file.folder)
-		}
+			// delete folder if empty after move
+			if len(dirFiles) == 0 {
+				os.Remove(file.folder)
+			}
 
+			// if no errors, get new updated file info
+			updatedFileInfo, err := GetFileInfo(newPath)
+			if err != nil {
+				return nil, err
+			}
+
+			// set updated file info at old file
+			*file = *updatedFileInfo
+		}
 	}
 
 	return files, nil

@@ -24,7 +24,7 @@ func ScanFolder(folder string, pattern string, recur bool) ([]*File, error) {
 	}
 
 	// iterate over files in folder
-	for i, file := range files {
+	for _, file := range files {
 
 		// check if file is folder
 		isFolder, _ := IsFolder(file)
@@ -51,27 +51,13 @@ func ScanFolder(folder string, pattern string, recur bool) ([]*File, error) {
 
 			// if file is not a dir, get information
 			// and add file to slice of files to be returned
-
-			// get stats releated data from file
-			path, err := FullAbsPath(file)
-			size, err := GetSize(file)
-			lastChanged, err := GetChangedTime(file)
-
-			// habdle error occured during stats opretation
+			// if error, return error and nil slice
+			fileInfo, err := GetFileInfo(file)
 			if err != nil {
 				return nil, err
 			}
 
-			// add new File struct with file properties
-			folderFiles = append(folderFiles, &File{
-				name:        FilenameWithoutExt(file),
-				extension:   filepath.Ext(file),
-				folder:      filepath.Dir(file),
-				path:        path,
-				size:        size,
-				lastChanged: lastChanged,
-				fileNr:      i + 1,
-			})
+			folderFiles = append(folderFiles, fileInfo)
 		}
 	}
 

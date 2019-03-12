@@ -9,7 +9,7 @@ import (
 func main() {
 
 	// get files in target folder maching pattern
-	var folder = "./files/beanbean/"
+	var folder = "./files/test2"
 	var pattern = "*"
 	fmt.Println("\n")
 
@@ -18,14 +18,18 @@ func main() {
 		panic(err)
 	}
 
-	/*for _, file := range files {
+	for _, file := range files {
 		fmt.Println(file)
-	}*/
+	}
 
-	_, err = filefriend.MoveFiles(files, "files/test", true)
+	movedFiles, err := filefriend.MoveFiles(files, "files/test", true)
 	if err != nil {
 		panic(err)
 		//fmt.Println(movedFiles)
+	}
+
+	for _, file := range movedFiles {
+		fmt.Println(file)
 	}
 
 	//fmt.Println(filefriend.SanitizePath("target"))

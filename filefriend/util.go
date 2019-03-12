@@ -17,7 +17,6 @@ type File struct {
 	path        string
 	size        string
 	lastChanged string
-	fileNr      int
 }
 
 // FilenameWithoutExt returns the cleaned filename
@@ -117,4 +116,30 @@ func PathExists(path string) bool {
 	}
 
 	return true
+}
+
+// GetFileInfo retrieves the stats
+// & information about a specific file,
+// returns a pointer to the file
+func GetFileInfo(file string) (*File, error) {
+
+	// get stats releated data from file
+	path, err := FullAbsPath(file)
+	size, err := GetSize(file)
+	lastChanged, err := GetChangedTime(file)
+
+	// handle error occured during stats opertation
+	if err != nil {
+		return nil, err
+	}
+
+	// add new File struct with file properties
+	return &File{
+		name:        FilenameWithoutExt(file),
+		extension:   filepath.Ext(file),
+		folder:      filepath.Dir(file),
+		path:        path,
+		size:        size,
+		lastChanged: lastChanged,
+	}, nil
 }
