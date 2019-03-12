@@ -1,3 +1,6 @@
+// Package filefriend provides a wide variety of functions that combines the os & filepath
+// packages into one, single wrapper, that allows for flexible and easy modifications of
+// the systems file and folders
 package filefriend
 
 import (
@@ -5,6 +8,7 @@ import (
 )
 
 // ScanFolder scans the given folder passed in.
+// Recur (true/false) decides if scan will follows nested folders.
 // Pattern matches files to include/exclude:
 //   pattern:
 //	{ term }
@@ -21,11 +25,8 @@ import (
 //		'\\' c      matches character c
 //		lo '-' hi   matches character c for lo <= c <= hi
 //
-// Recur (true/false) decides if scann follows nested folders.
 //
-// Returns a slice containing all the files scanned,
-// matching the given pattern, if any error occured,
-// the returned values will be nil and occured error
+// Returns a slice containing all the files scanned, matching the given pattern, or potensial error that occurred
 func ScanFolder(folder string, pattern string, recur bool) ([]*File, error) {
 
 	// initialize empty slice to hold file data

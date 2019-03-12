@@ -26,7 +26,7 @@ type File struct {
 	lastChanged string
 }
 
-// FilenameWithoutExt returns the cleaned filename without the folderpath and extension
+// FilenameWithoutExt returns the cleaned filename without the folderpath or extension
 func FilenameWithoutExt(file string) string {
 	return strings.TrimSuffix(filepath.Base(file), path.Ext(file))
 }
@@ -161,7 +161,7 @@ func PathExists(path string) bool {
 	return true
 }
 
-// CreateFolder creates a new folder.
+// CreateFolder creates a new folder at a given path.
 // If the folder does not exist create it, if not return the error that occurred.
 func CreateFolder(path string) error {
 
@@ -177,7 +177,7 @@ func CreateFolder(path string) error {
 }
 
 // GetFileInfo retrieves the stats & information about a specific file.
-// Returns a pointer to the file
+// Returns a pointer to the file or potensial error that occurred.
 func GetFileInfo(file string) (*File, error) {
 
 	// get stats releated data from file and,

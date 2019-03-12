@@ -7,9 +7,9 @@ import (
 
 // MoveFiles moves all the files in given slice to destination.
 // Uses the passed in destination parameter to select folder to move to.
-//
-// Returns the updated slice containing all the files or potensial error that occurred.
 // Cleanup will delete all trailing folders that are empty after move.
+//
+// Returns the updated slice containing, all the files or potensial error that occurred.
 func MoveFiles(files []*File, dest string, cleanup bool) error {
 
 	// create folder if not exist
