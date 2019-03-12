@@ -1,3 +1,6 @@
+// Package filefriend provides a wide variety of functions that combines the os & filepath
+// packages into one, single wrapper, that allows for flexible and easy modifications of
+// the systems file and folders
 package filefriend
 
 import (
