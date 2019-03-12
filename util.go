@@ -12,7 +12,7 @@ import (
 	"strings"
 )
 
-// File represent a file in a folder. Containing useful stats and information about the file
+// File represent a file in a folder. Containing useful stats and information about the file.
 //
 // name: 		The name of the file without extension or path
 // extension:	The extension of the file
@@ -29,12 +29,12 @@ type File struct {
 	lastChanged string
 }
 
-// FilenameWithoutExt returns the cleaned filename without the folderpath or extension
+// FilenameWithoutExt returns the cleaned filename without the folderpath or extension.
 func FilenameWithoutExt(file string) string {
 	return strings.TrimSuffix(filepath.Base(file), path.Ext(file))
 }
 
-// FullAbsPath returns the full absolute path from the passed in file or potensial error that occurred
+// FullAbsPath returns the full absolute path from the passed in file or potensial error that occurred.
 func FullAbsPath(file string) (string, error) {
 
 	absPath, err := os.Getwd()
@@ -47,8 +47,7 @@ func FullAbsPath(file string) (string, error) {
 	return filepath.Join(absPath, filepath.Dir(file)), err
 }
 
-// GetSize returns the size of the
-// passed in file or potensial error
+// GetSize returns the size of the passed in file or potensial error that occurred.
 func GetSize(file string) (string, error) {
 
 	stats, err := os.Stat(file)
@@ -60,8 +59,7 @@ func GetSize(file string) (string, error) {
 	return strconv.Itoa(int(stats.Size())), err
 }
 
-// GetChangedTime returns the timestamp of the passed,
-// in file's last modified time or potensial error that occurred
+// GetChangedTime returns the timestamp of the passed in file's last modified time, or potensial error that occurred.
 func GetChangedTime(file string) (string, error) {
 
 	stats, err := os.Stat(file)
@@ -74,7 +72,7 @@ func GetChangedTime(file string) (string, error) {
 }
 
 // IsFolder returns a boolean (true) if the given path is a folder.
-// If the path is a file a return boolean (false) and the error that occurred.
+// If the path is a file, return boolean (false) and the error with the reason.
 func IsFolder(path string) (bool, error) {
 
 	fileInfo, err := os.Stat(path)
@@ -86,9 +84,8 @@ func IsFolder(path string) (bool, error) {
 	return fileInfo.IsDir(), err
 }
 
-// SanitizePath formats the path if
-// the path is invalid for dir. Paths without
-// starting './' will be added and trailing '/'
+// SanitizePath formats the path into system navigatable format.
+// If the path is invalid for system, format the path with starting './' and trailing '/'
 func SanitizePath(path string) string {
 
 	// check first char
@@ -116,7 +113,7 @@ func Move(from string, to string) error {
 // with passed in content, that will be written to each single file.
 //
 // If file in folder exists, Create will skip to avoid remake of the file.
-// Returns error or nil depending on successful write or fail.
+// Returns an error or nil depending on successful write or fail.
 func Create(name string, ext string, folder string, content string, amount int) error {
 
 	// check if folder exists, create if not exists
@@ -155,7 +152,7 @@ func Create(name string, ext string, folder string, content string, amount int) 
 }
 
 // PathExists checks if a given path exists or not.
-// Returns a boolean (true/false) depending if path exists or not.
+// Returns a boolean (true/false) depending on case.
 func PathExists(path string) bool {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		return false
@@ -165,7 +162,8 @@ func PathExists(path string) bool {
 }
 
 // CreateFolder creates a new folder at a given path.
-// If the folder does not exist create it, if not return the error that occurred.
+// If the folder does not exist create it.
+// Returns an error if the creation failed.
 func CreateFolder(path string) error {
 
 	// check if folder exists, create if not
