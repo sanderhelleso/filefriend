@@ -1,6 +1,7 @@
 package filefriend
 
 import (
+	"fmt"
 	"os"
 	"path"
 	"path/filepath"
@@ -80,4 +81,24 @@ func IsFolder(path string) (bool, error) {
 
 	// return info if path is folder
 	return fileInfo.IsDir(), err
+}
+
+// SanitizePath formats the path if
+// the path is invalid. Paths without
+// trailing or starting '\' will be added
+func SanitizePath(path string) string {
+
+	// check first char
+	fmt.Println(path)
+	if path[0] != '/' && path[0] != '\\' {
+		path = "/" + path
+	}
+
+	// check last char
+	if path[len(path)-1] != '/' && path[len(path)-1] != '\\' {
+		path = path + "/"
+	}
+
+	return path
+
 }

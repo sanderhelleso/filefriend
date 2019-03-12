@@ -18,7 +18,15 @@ func main() {
 		panic(err)
 	}
 
-	for _, file := range files {
+	/*for _, file := range files {
 		fmt.Println(file)
+	}*/
+
+	movedFiles, err := filefriend.MoveFiles(files, "target")
+	if err != nil {
+		panic(err)
+		fmt.Println(movedFiles)
 	}
+
+	//fmt.Println(filefriend.SanitizePath("target"))
 }
