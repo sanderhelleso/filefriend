@@ -21,14 +21,14 @@ func main() {
 		panic(err)
 	}*/
 
-	var testFolder = "files/writeTest"
+	var testFolder = "bobo"
 	var pattern = "*"
 	files, err := filefriend.ScanFolder(testFolder, pattern, true)
 	if err != nil {
 		panic(err)
 	}
 
-	err = filefriend.MoveFiles(files, "test/mikefolder", true)
+	err = filefriend.MoveFiles(files, "test/newbobo", true)
 	if err != nil {
 		panic(nil)
 	}

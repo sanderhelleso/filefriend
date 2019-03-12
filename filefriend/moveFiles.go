@@ -14,18 +14,17 @@ import (
 // the potensial error that could occur during move
 func MoveFiles(files []*File, dest string, cleanup bool) error {
 
-	// check if folder exists, create if nt
-	if !PathExists(dest) {
-		err := os.MkdirAll(dest, 0755)
-		if err != nil {
-			return err
-		}
+	// create folder if not exist
+	dest = SanitizePath(dest)
+	err := CreateFolder(dest)
+	if err != nil {
+		return err
 	}
 
 	for _, file := range files {
 
 		// get new and old paths
-		newPath := SanitizePath(dest) + file.name + file.extension
+		newPath := dest + file.name + file.extension
 		oldPath := file.path + "\\" + file.name + file.extension
 
 		// move path (from -> to)

@@ -5,7 +5,7 @@ import (
 )
 
 // ScanFolder scans the given folder passed in
-// - Uses the passed in pattern to include/exclude files
+// - Pattern matches files to include/exclude
 // - Recur (true/false) decides if scann follows nested folders
 //
 // returns a slice containing all the files scanned
@@ -15,6 +15,7 @@ func ScanFolder(folder string, pattern string, recur bool) ([]*File, error) {
 
 	// initialize empty slice to hold file data
 	folderFiles := make([]*File, 0)
+	folder = SanitizePath(folder)
 
 	// get all files matching pattern and
 	// check for potensial errors while reading

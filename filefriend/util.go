@@ -116,11 +116,9 @@ func Create(name string, ext string, folder string, content string, amount int) 
 
 	// check if folder exists, create if not exists
 	folder = SanitizePath(folder)
-	if !PathExists(folder) {
-		err := os.MkdirAll(folder, 0755)
-		if err != nil {
-			return err
-		}
+	err := CreateFolder(folder)
+	if err != nil {
+		return err
 	}
 
 	fileName := name
@@ -160,6 +158,22 @@ func PathExists(path string) bool {
 	}
 
 	return true
+}
+
+// CreateFolder creates a new folder
+// if the folder does not exist create it
+// if not return the error that folder exist
+func CreateFolder(path string) error {
+
+	// check if folder exists, create if not
+	if !PathExists(path) {
+		err := os.MkdirAll(path, 0755)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 // GetFileInfo retrieves the stats
