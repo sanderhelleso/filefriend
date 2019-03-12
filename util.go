@@ -14,12 +14,12 @@ import (
 
 // File represent a file in a folder. Containing useful stats and information about the file.
 //
-// name: 		The name of the file without extension or path
-// extension:	The extension of the file
-// folder:		The relative folder path of the file
-// path:		The absolute filesystems path to the folder
-// size:		The size of the file in bytes in string format
-// lastChanged: The files last modified time in string format
+// name: 		The name of the file without extension or path.
+// extension:	The extension of the file.
+// folder:		The relative folder path of the file.
+// path:		The absolute filesystems path to the folder.
+// size:		The size of the file in bytes in string format.
+// lastChanged: The files last modified time in string format.
 type File struct {
 	name        string
 	extension   string
