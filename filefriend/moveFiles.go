@@ -1,14 +1,18 @@
 package filefriend
 
-import "os"
+import (
+	"io/ioutil"
+	"os"
+)
 
 // MoveFiles moves all the files in given slice to destination
 // - Uses the past in destination paramter to select folder to move to
 //
-// returns the updated slice containing all the files
-// moved to the destination golder, if error return
+// - returns the updated slice containing all the files
+// - moved to the destination golder, if error return
+// - cleanup will delete all trailing folders that are empty after move
 // the potensial error that could occur during move
-func MoveFiles(files []*File, dest string) ([]*File, error) {
+func MoveFiles(files []*File, dest string, cleanup bool) ([]*File, error) {
 
 	// check if folder exists, create if nt
 	if !PathExists(dest) {
@@ -20,32 +24,32 @@ func MoveFiles(files []*File, dest string) ([]*File, error) {
 
 	for _, file := range files {
 
+		// get new and old paths
 		newPath := SanitizePath(dest) + file.name + file.extension
 		oldPath := file.path + "\\" + file.name + file.extension
+
+		// move path (from -> to)
 		moved := Move(oldPath, newPath)
+
+		// handle potensial error occuring during move
 		if moved != nil {
 			return nil, moved
 		}
+
+		// if 'clenup' flag is set to true
+		// check if old folder is empty
+		// if its empty, remove it
+		dirFiles, err := ioutil.ReadDir(file.folder)
+		if err != nil {
+			return nil, err
+		}
+
+		// delete folder if empty after move
+		if len(dirFiles) == 0 {
+			os.Remove(file.folder)
+		}
+
 	}
 
 	return files, nil
-}
-
-// Move moves the fies from one directory
-// to another, returns err or nil depending
-// on successfull move or not
-func Move(from string, to string) error {
-	err := os.Rename(from, to)
-	return err
-}
-
-// PathExists checks if a path exists or not
-// returns a boolean (true/false) depending
-// if path exists or not
-func PathExists(path string) bool {
-	if _, err := os.Stat(path); os.IsNotExist(err) {
-		return false
-	}
-
-	return true
 }

@@ -1,7 +1,6 @@
 package filefriend
 
 import (
-	"fmt"
 	"os"
 	"path"
 	"path/filepath"
@@ -89,7 +88,6 @@ func IsFolder(path string) (bool, error) {
 func SanitizePath(path string) string {
 
 	// check first char
-	fmt.Println(path)
 	if path[0] != '/' && path[0] != '\\' {
 		path = "./" + path
 	}
@@ -100,5 +98,23 @@ func SanitizePath(path string) string {
 	}
 
 	return path
+}
 
+// Move moves the fies from one directory
+// to another, returns err or nil depending
+// on successfull move or not
+func Move(from string, to string) error {
+	err := os.Rename(from, to)
+	return err
+}
+
+// PathExists checks if a path exists or not
+// returns a boolean (true/false) depending
+// if path exists or not
+func PathExists(path string) bool {
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		return false
+	}
+
+	return true
 }
