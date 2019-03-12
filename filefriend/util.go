@@ -1,6 +1,7 @@
 package filefriend
 
 import (
+	"io/ioutil"
 	"os"
 	"path"
 	"path/filepath"
@@ -105,6 +106,49 @@ func SanitizePath(path string) string {
 func Move(from string, to string) error {
 	err := os.Rename(from, to)
 	return err
+}
+
+// Create creates 'n' amount of files with ext to passed in folder
+// with passed in content that will be written to each file
+// if file in folder exists, Create will skip to avoid remake
+// returns err or nil depending on successfull write
+func Create(name string, ext string, folder string, content string, amount int) error {
+
+	// check if folder exists, create if not exists
+	folder = SanitizePath(folder)
+	if !PathExists(folder) {
+		err := os.MkdirAll(folder, 0755)
+		if err != nil {
+			return err
+		}
+	}
+
+	fileName := name
+	for i := 0; i < amount; i++ {
+
+		// update file index name
+		if i > 0 {
+			fileName = name + strconv.Itoa(i)
+		}
+
+		// check if path to file that should be created exists
+		file := folder + fileName + "." + ext
+		exists := PathExists(file)
+
+		// if it does not exists, continue to create file
+		if !exists {
+
+			// attempt to create file
+			err := ioutil.WriteFile(file, []byte(content), 0755)
+
+			// handle potensial error
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
 }
 
 // PathExists checks if a path exists or not
