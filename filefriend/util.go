@@ -84,14 +84,14 @@ func IsFolder(path string) (bool, error) {
 }
 
 // SanitizePath formats the path if
-// the path is invalid. Paths without
-// trailing or starting '\' will be added
+// the path is invalid for dir. Paths without
+// starting './' will be added and trailing '/'
 func SanitizePath(path string) string {
 
 	// check first char
 	fmt.Println(path)
 	if path[0] != '/' && path[0] != '\\' {
-		path = "/" + path
+		path = "./" + path
 	}
 
 	// check last char
