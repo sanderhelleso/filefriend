@@ -34,3 +34,7 @@ git clone https://github.com/sanderhelleso/filefriend.git
 ## Documentation
 Detailed documentation and overview of the package can be found <a href="https://godoc.org/github.com/sanderhelleso/filefriend">here</a>
 <br>
+
+## Licence
+MIT
+<br>
